@@ -1,11 +1,29 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React, { useState } from "react";
+import Cart from "./components/Cart/Cart";
+import Header from "./components/Layout/Header";
+import Meals from "./components/Meals/Meals";
+import CartProvider from "./store/CartProvider";
 
 function App() {
+  const [showCart, setShowCart] = useState(false);
+
+  const handleCartUpdate = () => {
+    setShowCart(!showCart);
+  };
+
   return (
-    <div className="App">
-      <h2>Hello</h2>
-    </div>
+    <CartProvider>
+      {showCart && (
+        <Cart
+          onCartInvisible={handleCartUpdate}
+          onCloseCart={handleCartUpdate}
+        />
+      )}
+      <Header onCartDisplayChange={handleCartUpdate} />
+      <main>
+        <Meals />
+      </main>
+    </CartProvider>
   );
 }
 
